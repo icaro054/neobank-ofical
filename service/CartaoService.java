@@ -2,6 +2,7 @@ package service;
 
 import entity.Cartao;
 import repository.CartaoRepository;
+import exception.FormatoInvalido;
 
 public class CartaoService {
 
@@ -9,25 +10,29 @@ public class CartaoService {
 
     public void criarCartao(Cartao novoCartao) {
         
-        if (novoCartao.getNumero() == null || novoCartao.getNumero().length() != 16) {
-            throw new IllegalArgumentException("Cartão inválido: O número deve conter exatamente 16 dígitos.");
+        // Exige 16 digitos 
+        if (novoCartao.getNumero() == null || !novoCartao.getNumero().matches("\\d{16}")) {
+            throw new FormatoInvalido("Cartão inválido: O número deve conter exatamente 16 números.");
         }
 
         if (novoCartao.getNomeTitular() == null || novoCartao.getNomeTitular().trim().isEmpty()) {
-            throw new IllegalArgumentException("Cartão inválido: O nome do titular é obrigatório.");
+            throw new FormatoInvalido("Cartão inválido: O nome do titular é obrigatório.");
         }
 
-        if (novoCartao.getCvv() == null || novoCartao.getCvv().length() != 3) {
-            throw new IllegalArgumentException("Cartão inválido: O CVV deve conter 3 dígitos.");
+        // Exige 3 digitos 
+        if (novoCartao.getCvv() == null || !novoCartao.getCvv().matches("\\d{3}")) {
+            throw new FormatoInvalido("Cartão inválido: O CVV deve conter exatamente 3 números.");
         }
 
-        if (novoCartao.getValidade() == null || novoCartao.getValidade().trim().isEmpty()) {
-            throw new IllegalArgumentException("Cartão inválido: A data de validade é obrigatória.");
+        // Exige o formato MM/YY 
+        if (novoCartao.getValidade() == null || !novoCartao.getValidade().matches("(0[1-9]|1[0-2])/\\d{2}")) {
+            throw new FormatoInvalido("Cartão inválido: A validade deve estar no formato MM/YY (ex: 12/30).");
         }
 
         if (novoCartao.getLimite() < 0) {
-            throw new IllegalArgumentException("Cartão inválido: O limite do cartão não pode ser negativo.");
+            throw new FormatoInvalido("Cartão inválido: O limite do cartão não pode ser negativo.");
         }
+        
         repository.salvar(novoCartao);
     }
 }

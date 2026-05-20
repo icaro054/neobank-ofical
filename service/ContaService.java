@@ -2,6 +2,7 @@ package service;
 
 import entity.Conta;
 import repository.ContaRepository;
+import exception.SaldoInsuficiente; 
 
 public class ContaService {
 
@@ -32,42 +33,31 @@ public class ContaService {
         repository.salvar(novaConta);
     }
 
-    // Adicione dentro do ContaService:
-
     public void depositar(Conta conta, double valor) {
-        // Regra 1: Não existe depósito de R$ 0,00 ou valor negativo
         if (valor <= 0) {
             throw new IllegalArgumentException("Erro: O valor do depósito deve ser maior que zero.");
         }
         
-        // Pega o saldo atual, soma com o valor do depósito e salva de volta
         double novoSaldo = conta.getSaldo() + valor;
         conta.setSaldo(novoSaldo);
         
-        // Aqui você manda o repositório atualizar a conta com o novo saldo!
-        // repository.atualizar(conta); // (Descomente se o seu repositório tiver um método de atualizar)
-        
-        System.out.println("Depósito de R$ " + valor + " realizado com sucesso!");
+        //O Controller/Main que avisa o sucesso
     }
 
     public void sacar(Conta conta, double valor) {
-        // Regra 1: Não existe saque de valor negativo
         if (valor <= 0) {
             throw new IllegalArgumentException("Erro: O valor do saque deve ser maior que zero.");
         }
         
-        // Regra 2: O leão de chácara não deixa sacar se não tiver dinheiro!
         if (conta.getSaldo() < valor) {
-            throw new IllegalArgumentException("Erro: Saldo insuficiente. Seu saldo atual é R$ " + conta.getSaldo());
+            // 2. Usando a exceção customizada que você criou!
+            throw new SaldoInsuficiente("Erro: Saldo insuficiente. Seu saldo atual é R$ " + conta.getSaldo());
         }
         
-        // Subtrai o valor e atualiza a conta
         double novoSaldo = conta.getSaldo() - valor;
         conta.setSaldo(novoSaldo);
         
-        // repository.atualizar(conta);
-        
-        System.out.println("Saque de R$ " + valor + " autorizado com sucesso!");
+        // Sem prints aqui também.
     }
 
     public Conta buscarContaPorNumero(String numeroConta) {
@@ -93,5 +83,18 @@ public class ContaService {
         }
         
         return contaEncontrada;
+    }
+
+    public void transferir(Conta origem, Conta destino, double valor) {
+        if (origem.getNumero().equals(destino.getNumero())) {
+            throw new IllegalArgumentException("Você não pode transferir para sua própria conta.");
+        }
+        
+        if (valor <= 0) {
+            throw new IllegalArgumentException("O valor da transferência deve ser maior que zero.");
+        }
+        
+        this.sacar(origem, valor);
+        this.depositar(destino, valor);
     }
 }

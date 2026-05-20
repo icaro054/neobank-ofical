@@ -2,25 +2,36 @@ package service;
 
 import entity.Usuario;
 import repository.UsuarioRepository;
+import exception.FormatoInvalido;
+import exception.LoginEmUso;
+import exception.CredenciaisInvalidas;
 
 public class UsuarioService {
+    
     private UsuarioRepository repository = new UsuarioRepository();
 
     public void criarUsuario(Usuario novoUsuario) {
+        
         if (novoUsuario.getLogin() == null || novoUsuario.getLogin().trim().isEmpty()) {
-            throw new IllegalArgumentException("Erro: Login é obrigatório.");
-        }
-        if (novoUsuario.getEmail() == null || !novoUsuario.getEmail().contains("@")) {
-            throw new IllegalArgumentException("Erro: Email inválido.");
-        }
-        if (novoUsuario.getSenha() == null || novoUsuario.getSenha().length() < 6) {
-            throw new IllegalArgumentException("Erro: A senha deve ter no mínimo 6 caracteres.");
+            throw new FormatoInvalido("Erro: Login é obrigatório.");
         }
         
-        // Verifica se alguém já pegou esse login antes
+        // Regex para garantir que o e-mail tem o formato "nome@provedor.com"
+        String regexEmail = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        if (novoUsuario.getEmail() == null || !novoUsuario.getEmail().matches(regexEmail)) {
+            throw new FormatoInvalido("Erro: Formato de e-mail inválido. Use um formato como nome@email.com.");
+        }
+        
+        // Senha Forte (Mín. 8 chars, 1 maiúscula, 1 número)
+        String regexSenha = "^(?=.*[A-Z])(?=.*\\d).{8,}$";
+        if (novoUsuario.getSenha() == null || !novoUsuario.getSenha().matches(regexSenha)) {
+            throw new FormatoInvalido("Erro: A senha deve ter no mínimo 8 caracteres, contendo pelo menos 1 número e 1 letra maiúscula.");
+        }
+        
+        // exibe mensagem para duplicação
         Usuario usuarioExistente = repository.buscarPorLogin(novoUsuario.getLogin());
         if (usuarioExistente != null) {
-            throw new IllegalArgumentException("Erro: Este login já está em uso.");
+            throw new LoginEmUso("Erro: O login '" + novoUsuario.getLogin() + "' já está em uso. Escolha outro.");
         }
 
         repository.salvar(novoUsuario);
@@ -29,9 +40,9 @@ public class UsuarioService {
     public Usuario fazerLogin(String login, String senha) {
         Usuario usuarioEncontrado = repository.buscarPorLogin(login);
         
-        // Se o login não existir ou a senha estiver diferente da que foi salva
+        // exibe mensagem para falha de login
         if (usuarioEncontrado == null || !usuarioEncontrado.getSenha().equals(senha)) {
-            throw new IllegalArgumentException("Login ou senha incorretos!");
+            throw new CredenciaisInvalidas("Login ou senha incorretos!");
         }
         
         return usuarioEncontrado;

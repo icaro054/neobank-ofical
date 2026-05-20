@@ -33,16 +33,14 @@ public class TransacaoService {
         repository.salvar(novaTransacao);
     }
 
-    // Não esqueça de importar a biblioteca de Listas lá no topo do arquivo!
-    // import java.util.List;
 
     public List<Transacao> buscarPorConta(String numeroConta) {
-        // Validação básica: tem que passar o número da conta para puxar o extrato
+        // passa o número da conta para puxar o extrato
         if (numeroConta == null || numeroConta.trim().isEmpty()) {
             throw new IllegalArgumentException("Erro: Número da conta é obrigatório para buscar o extrato.");
         }
         
-        // Pede para a gaveta (Repositório) trazer todas as transações daquele número
+        // traz todas as transações daquele número
         List<Transacao> extrato = repository.buscarPorConta(numeroConta);
         
         // Se a lista voltar vazia, avisa o usuário

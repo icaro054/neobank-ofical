@@ -1,23 +1,30 @@
 package repository;
-// apenas importações
+
 import entity.EntidadeBase;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections; 
 
-public abstract class GenericRepository <T extends EntidadeBase> {
-    // Geric = pode ser usado para qualquer tipo de entidade
+public abstract class GenericRepository<T extends EntidadeBase> {
+    
     protected List<T> dados = new ArrayList<>();
 
+    //  Salvar
     public void salvar(T entidade) {
-        dados.add(entidade);
-    }
-    // busca universal para qualquer tipo de entidade
-    public T buscarPor(String id) {
-        for (T item : dados) {
-            if (item.getId().equals(id)) {
-                return item;
-            }
+        if (!dados.contains(entidade)) {
+            dados.add(entidade);
         }
-        return null;
     }
+
+    // Buscar Todos
+    public List<T> buscarTodos() {
+        
+        return Collections.unmodifiableList(dados);
+    }
+
+    // Excluir
+    public void deletar(T entidade) {
+        dados.remove(entidade);
+    }
+
 }

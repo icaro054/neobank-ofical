@@ -2,6 +2,7 @@ import entity.*;
 import controller.*;
 import util.GeradorConta;
 import java.util.*;
+import exception.*;
 
 public class main {
     public static void main(String[] args) {
@@ -27,7 +28,7 @@ public class main {
 
         do {
             try {
-                // loop de menu 1 - login ou criar conta
+                // menu 1 - login ou criar conta
                 if (contaLogada == null) {
                     System.out.println("\n--- TELA INICIAL ---");
                     System.out.println("1 - Abrir Nova Conta");
@@ -112,7 +113,9 @@ public class main {
                             String email = sc.nextLine();
                             System.out.print("Crie um Login: ");
                             String login = sc.nextLine();
-                            System.out.print("Crie uma Senha (mínimo 6 caracteres): ");
+                            
+                            // MENSAGEM ATUALIZADA PARA A REGRA DE SENHA FORTE
+                            System.out.print("Crie uma Senha (mínimo 8 caracteres, 1 maiúscula e 1 número): ");
                             String senha = sc.nextLine();
 
                             usuarioController.registrar(email, login, senha, cliente);
@@ -142,6 +145,8 @@ public class main {
                                 
                             } catch (IllegalArgumentException e) {
                                 System.out.println("\n ACESSO NEGADO: " + e.getMessage());
+                            } catch (CredenciaisInvalidas e) {
+                                System.out.println("\n 🚫 AVISO NEOBANK: " + e.getMessage());
                             }
                             break;
 
@@ -161,6 +166,7 @@ public class main {
                     System.out.println("2 - Sacar");
                     System.out.println("3 - Ver Extrato de Transações");
                     System.out.println("4 - Ver Resumo Completo da Conta (Produtos)");
+                    System.out.println("5 - Transferência (PIX)");
                     System.out.println("8 - Sair da Conta (Logout)");
                     System.out.println("0 - Desligar Sistema");
                     System.out.print("Escolha: ");
@@ -175,29 +181,24 @@ public class main {
                             sc.nextLine();
                             contaController.depositar(contaLogada, dep);
                             transacaoController.registrar(contaLogada, dep, "DEPOSITO");
+                            System.out.println("\nDepósito de R$ " + dep + " realizado com sucesso!");
                             break;
 
                         case 2:
                             System.out.print("Valor do saque: R$ ");
                             double saque = sc.nextDouble();
                             sc.nextLine();
-                            try {
-                                contaController.sacar(contaLogada, saque);
-                                transacaoController.registrar(contaLogada, saque, "SAQUE");
-                            } catch (IllegalArgumentException e) {
-                                System.out.println(" OPERAÇÃO NEGADA: " + e.getMessage());
-                            }
+                            // Try/Catch removido daqui para deixar o catch global cuidar disso
+                            contaController.sacar(contaLogada, saque);
+                            transacaoController.registrar(contaLogada, saque, "SAQUE");
+                            System.out.println("\nSaque de R$ " + saque + " autorizado com sucesso!");
                             break;
 
                         case 3:
-                            try {
-                                List<Transacao> extrato = transacaoController.exibirExtrato(contaLogada.getNumero());
-                                System.out.println("\n EXTRATO BANCÁRIO ");
-                                for (Transacao t : extrato) {
-                                    System.out.println("[ " + t.getTipo() + " ] - R$ " + t.getValor());
-                                }
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("alerta" + e.getMessage());
+                            List<Transacao> extrato = transacaoController.exibirExtrato(contaLogada.getNumero());
+                            System.out.println("\n EXTRATO BANCÁRIO ");
+                            for (Transacao t : extrato) {
+                                System.out.println("[ " + t.getTipo() + " ] - R$ " + t.getValor());
                             }
                             break;
 
@@ -210,6 +211,25 @@ public class main {
                             if (cartaoAtual != null) System.out.println("Cartão de Crédito final " + cartaoAtual.getNumero().substring(15) + " | Limite: R$ " + cartaoAtual.getLimite());
                             if (faturaAtual != null) System.out.println("Fatura Atual: R$ " + faturaAtual.getValor() + " (Venc: " + faturaAtual.getDataVencimento() + ")");
                             if (emprestimoAtual != null) System.out.println("Empréstimo Ativo: R$ " + emprestimoAtual.getValorTotal() + " (12 parcelas)");
+                            break;
+                            
+                        case 5:
+                            System.out.println("\n--- ÁREA PIX / TRANSFERÊNCIA ---");
+                            System.out.print("Digite o número da conta de destino: ");
+                            String numeroDestino = sc.nextLine();
+                            
+                            System.out.print("Valor da transferência: R$ ");
+                            double valorTransferencia = sc.nextDouble();
+                            sc.nextLine(); 
+                            
+                            // Try/Catch removido daqui para deixar o catch global cuidar disso
+                            Conta contaDestino = contaController.buscarConta(numeroDestino);
+                            contaController.transferir(contaLogada, contaDestino, valorTransferencia);
+                            
+                            transacaoController.registrar(contaLogada, valorTransferencia, "PIX ENVIADO");
+                            transacaoController.registrar(contaDestino, valorTransferencia, "PIX RECEBIDO");
+                            
+                            System.out.println("\nTransferência de R$ " + valorTransferencia + " enviada com sucesso para " + contaDestino.getCliente().getNome() + "!");
                             break;
 
                         case 8:
@@ -226,14 +246,18 @@ public class main {
                             break;
                     }
                 }
+            // super mensagens
             } catch (InputMismatchException e) {
                 System.out.println("\n Erro: Por favor, digite um número válido nas opções de menu.");
                 sc.nextLine();
             } catch (IllegalArgumentException e) {
                 System.out.println("\n ERRO: " + e.getMessage());
+            } catch (DocumentoInvalido | ClienteJaCadastrado | ClienteNaoEncontrado | SaldoInsuficiente | FormatoInvalido | LoginEmUso | CredenciaisInvalidas e) {
+                System.out.println("\n AVISO NEOBANK: " + e.getMessage());
             } catch (Exception e) {
-                System.out.println("\n Erro inesperado: " + e.getMessage());
+                System.out.println("\n Erro inesperado do Sistema: " + e.getMessage());
             }
+
 
         } while (opcao != 0);
 
