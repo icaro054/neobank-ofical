@@ -2,32 +2,41 @@ package service;
 
 import entity.ChavePix;
 import repository.ChavePixRepository;
+import exception.FormatoInvalido;
 
 public class ChavePixService {
 
     private ChavePixRepository repository = new ChavePixRepository();
 
     public void criarChavePix(ChavePix novaChave) {
-        
-        
-        if (novaChave.getTipoChave() == null || novaChave.getTipoChave().trim().isEmpty()) {
-            throw new IllegalArgumentException("Erro: O tipo da chave Pix é obrigatório.");
+
+        String tipo = novaChave.getTipoChave();
+        String valor = novaChave.getValorChave();
+
+        if (tipo == null || valor == null) {
+            throw new FormatoInvalido("Erro: Tipo e valor da chave PIX são obrigatórios.");
         }
 
-        if (novaChave.getValorChave() == null || novaChave.getValorChave().trim().isEmpty()) {
-            throw new IllegalArgumentException("Erro: O valor da chave Pix não pode estar vazio.");
-        }
-
-        if (novaChave.getValorChave().contains(" ")) {
-            throw new IllegalArgumentException("Erro: O valor da chave Pix não pode conter espaços.");
-        }
-
-        if (novaChave.getConta() == null) {
-            throw new IllegalArgumentException("Erro: A chave Pix precisa estar vinculada a uma Conta válida.");
-        }
-
-        if (novaChave.getCliente() == null) {
-            throw new IllegalArgumentException("Erro: A chave Pix precisa estar vinculada a um Cliente.");
+        // Validação dinâmica pelo tipo de chave
+        switch (tipo.toUpperCase()) {
+            case "CPF":
+            case "CNPJ":
+                if (!valor.matches("\\d{11}") && !valor.matches("\\d{14}")) {
+                    throw new FormatoInvalido("Erro: Chave PIX de documento inválida. Digite apenas números.");
+                }
+                break;
+            case "EMAIL":
+                if (!valor.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+                    throw new FormatoInvalido("Erro: Chave PIX de e-mail com formato inválido.");
+                }
+                break;
+            case "CELULAR":
+                if (!valor.matches("\\d{10,11}")) { // ficaria 85999999999
+                    throw new FormatoInvalido("Erro: Chave PIX de celular deve conter DDD + Número, apenas dígitos.");
+                }
+                break;
+            default:
+                throw new FormatoInvalido("Erro: Tipo de chave PIX não reconhecido (Use CPF, CNPJ, EMAIL ou CELULAR).");
         }
 
         repository.salvar(novaChave);

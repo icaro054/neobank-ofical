@@ -1,23 +1,16 @@
 package repository;
 
 import entity.Usuario;
-import java.util.ArrayList;
-import java.util.List;
 
-public class UsuarioRepository {
-    // Lista na memória simulando o banco de dados
-    private List<Usuario> listaUsuarios = new ArrayList<>();
-
-    public void salvar(Usuario usuario) {
-        listaUsuarios.add(usuario);
-    }
-
+// segue o repositorio generico
+public class UsuarioRepository extends GenericRepository<Usuario> {
+    
     public Usuario buscarPorLogin(String login) {
-        for (Usuario u : listaUsuarios) {
+        for (Usuario u : dados) { 
             if (u.getLogin().equals(login)) {
                 return u;
             }
         }
-        return null; // Se não achar o login, retorna vazio
+        return null; 
     }
 }

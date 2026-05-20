@@ -37,5 +37,9 @@ public class ContaController {
     
     public Conta buscarContaPorDocumentoDoCliente(String documento) {
         return service.buscarContaPorDocumentoDoCliente(documento);
-}
+    }
+
+    public void transferir(Conta origem, Conta destino, double valor) {
+        service.transferir(origem, destino, valor);
+    }
 }
