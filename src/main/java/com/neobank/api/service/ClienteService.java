@@ -19,6 +19,25 @@ public class ClienteService {
         String docLimpo = novoCliente.getDocumento().replaceAll("[^0-9]", "");
         novoCliente.setDocumento(docLimpo); 
 
+        if (novoCliente.getEndereco() == null) {
+            throw new IllegalArgumentException("Erro: O endereço completo é obrigatório para o cadastro.");
+        }
+        if (novoCliente.getEndereco().getCep() == null || novoCliente.getEndereco().getCep().trim().isEmpty()) {
+            throw new IllegalArgumentException("Erro: O CEP do endereço é obrigatório.");
+        }
+        if (novoCliente.getEndereco().getRua() == null || novoCliente.getEndereco().getRua().trim().isEmpty()) {
+            throw new IllegalArgumentException("Erro: A Rua do endereço é obrigatória.");
+        }
+        if (novoCliente.getEndereco().getNumero() == null || novoCliente.getEndereco().getNumero().trim().isEmpty()) {
+            throw new IllegalArgumentException("Erro: O Número do endereço é obrigatório.");
+        }
+        if (novoCliente.getEndereco().getCidade() == null || novoCliente.getEndereco().getCidade().trim().isEmpty()) {
+            throw new IllegalArgumentException("Erro: A Cidade do endereço é obrigatória.");
+        }
+        if (novoCliente.getEndereco().getEstado() == null || novoCliente.getEndereco().getEstado().trim().isEmpty()) {
+            throw new IllegalArgumentException("Erro: O Estado do endereço é obrigatório.");
+        }
+
         
         if (novoCliente.getTipoCliente().equalsIgnoreCase("PF")) {
             if (!docLimpo.matches("\\d{11}") || !ValidadorDocumento.isCpfValido(docLimpo)) {
@@ -37,6 +56,13 @@ public class ClienteService {
 
         repository.salvar(novoCliente);
     }
+
+    public void excluirCliente(Cliente cliente) {
+        if (cliente != null) {
+            repository.deletar(cliente);
+        }
+    }
+
 
     public Cliente buscarClientePorDocumento(String documento) {
         if (documento == null || documento.trim().isEmpty()) {

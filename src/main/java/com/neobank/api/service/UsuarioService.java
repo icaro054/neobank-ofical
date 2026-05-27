@@ -51,4 +51,11 @@ public class UsuarioService {
         
         return usuarioEncontrado;
     }
+
+    public void excluirUsuarioPorLogin(String login) {
+        Usuario usuario = repository.buscarPorLogin(login);
+        if (usuario != null) {
+            repository.deletar(usuario);
+        }
+    }
 }

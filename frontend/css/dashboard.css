@@ -135,3 +135,187 @@ body {
 .modal-botoes { display: flex; gap: 1rem; }
 .btn-confirmar { flex: 1; background-color: var(--success-green); color: white; border: none; padding: 0.8rem; border-radius: 10px; cursor: pointer; font-weight: bold; }
 .btn-cancelar { flex: 1; background-color: var(--error-red); color: white; border: none; padding: 0.8rem; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+
+.dash-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-perfil {
+    background: none;
+    border: 1px solid var(--primary-blue);
+    color: var(--primary-blue);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-cartao {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    border: 1px solid #374151;
+}
+
+.cartao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cartao-titulo {
+    color: #9ca3af;
+    margin: 0;
+}
+
+.cartao-badge {
+    background: var(--primary-blue);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.cartao-numero {
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #f3f4f6;
+}
+
+.cartao-info {
+    display: flex;
+    justify-content: space-between;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.cartao-limite-container {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #374151;
+}
+
+.cartao-limite-titulo {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #9ca3af;
+}
+
+.cartao-limite-valor {
+    margin: 0;
+    color: #10b981;
+}
+
+/* Modais (Extracted) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content-transparent {
+    background: #1f2937;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid #374151;
+}
+
+.modal-content-transparent h3 {
+    margin: 0 0 1rem 0;
+    color: #f3f4f6;
+}
+
+.modal-form-group {
+    text-align: left;
+    margin-top: 1rem;
+}
+
+.modal-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #d1d5db;
+}
+
+.modal-form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #374151;
+    color: white;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.perfil-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.perfil-info {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.perfil-info h4 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #9ca3af;
+}
+
+.perfil-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 2rem;
+    border-top: 1px solid #374151;
+    padding-top: 1rem;
+}
+
+.btn-sair-conta {
+    background-color: #4b5563;
+    color: white;
+}
+
+.btn-excluir-conta {
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}

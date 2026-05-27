@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeoBank - Minha Conta</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <script src="js/dashboard.js" defer></script>
 </head>
 <body class="dashboard-body">
 
     <div class="dashboard-container">
         <header class="dash-header">
-            <div>
-                <p class="boas-vindas">Olá,</p>
-                <h2 id="nomeUsuario" class="nome-usuario">Carregando...</h2>
+            <div class="dash-header-top">
+                <p>Olá, <strong id="nomeUsuario" class="nome-usuario">Carregando...</strong></p>
+                <button onclick="abrirPerfil()" class="btn-perfil">Meu Perfil</button>
             </div>
             <button onclick="sair()" class="btn-sair">Sair</button>
         </header>
@@ -22,6 +22,23 @@
             <p>Saldo disponível</p>
             <h1 id="saldoConta">R$ 0,00</h1>
             <p id="infoConta" class="info-conta">Conta: -- | Agência: --</p>
+        </div>
+
+        <!-- Área de Cartão Fictícia -->
+        <div class="card-saldo card-cartao">
+            <div class="cartao-header">
+                <p class="cartao-titulo">Cartão de Crédito</p>
+                <span class="cartao-badge">Virtual</span>
+            </div>
+            <h2 class="cartao-numero">**** **** **** 9999</h2>
+            <div class="cartao-info">
+                <span id="nomeCartao">Carregando...</span>
+                <span>Validade: 12/30</span>
+            </div>
+            <div class="cartao-limite-container">
+                <p class="cartao-limite-titulo">Limite Disponível</p>
+                <h3 class="cartao-limite-valor">R$ 3.000,00</h3>
+            </div>
         </div>
 
         <div class="acoes-banco">
@@ -35,6 +52,76 @@
             <ul id="listaExtrato" class="lista-extrato">
                 <li>Carregando extrato...</li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Modais de Ações -->
+    <div id="modalDeposito" class="modal">
+        <div class="modal-content-transparent">
+            <h3>Depositar na Conta</h3>
+            <div class="modal-form-group">
+                <label for="valorDeposito">Valor (R$)</label>
+                <input type="number" id="valorDeposito" placeholder="Ex: 100.00">
+            </div>
+            <div class="modal-actions">
+                <button onclick="confirmarDeposito()" class="btn-acao">Confirmar</button>
+                <button onclick="fecharModal('modalDeposito')" class="btn-sair">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalSaque" class="modal">
+        <div class="modal-content-transparent">
+            <h3>Sacar da Conta</h3>
+            <div class="modal-form-group">
+                <label for="valorSaque">Valor (R$)</label>
+                <input type="number" id="valorSaque" placeholder="Ex: 50.00">
+            </div>
+            <div class="modal-actions">
+                <button onclick="confirmarSaque()" class="btn-acao">Confirmar</button>
+                <button onclick="fecharModal('modalSaque')" class="btn-sair">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPix" class="modal">
+        <div class="modal-content-transparent">
+            <h3>Fazer PIX (Transferência)</h3>
+            <div class="modal-form-group">
+                <label for="contaDestino">Número da Conta Destino</label>
+                <input type="text" id="contaDestino" placeholder="Ex: 123456">
+            </div>
+            <div class="modal-form-group">
+                <label for="valorPix">Valor (R$)</label>
+                <input type="number" id="valorPix" placeholder="Ex: 150.00">
+            </div>
+            <div class="modal-actions">
+                <button onclick="confirmarPix()" class="btn-acao">Confirmar</button>
+                <button onclick="fecharModal('modalPix')" class="btn-sair">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPerfil" class="modal">
+        <div class="modal-content-transparent">
+            <div class="perfil-header">
+                <h3>Meu Perfil</h3>
+                <button onclick="fecharModal('modalPerfil')" class="perfil-close">&times;</button>
+            </div>
+            
+            <div class="perfil-info">
+                <p><strong>Nome:</strong> <span id="perfilNome">...</span></p>
+                <p><strong>Documento:</strong> <span id="perfilDoc">...</span></p>
+                <p><strong>E-mail:</strong> <span id="perfilEmail">...</span></p>
+                
+                <h4>Endereço</h4>
+                <p id="perfilEndereco">...</p>
+            </div>
+
+            <div class="perfil-actions">
+                <button onclick="sair()" class="btn-acao btn-sair-conta">Sair da Conta</button>
+                <button onclick="excluirConta()" class="btn-sair btn-excluir-conta">Excluir Conta</button>
+            </div>
         </div>
     </div>
 

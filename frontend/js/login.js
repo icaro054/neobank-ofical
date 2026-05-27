@@ -13,7 +13,7 @@ function efetuarLogin(event) {
 
     // empacota dados
     const dadosLogin = {
-        login: document.getElementById('login').value.trim(),
+        login: document.getElementById('login').value.trim().replace(/\D/g, ''),
         senha: document.getElementById('senha').value
     };
 

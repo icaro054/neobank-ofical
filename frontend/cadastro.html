@@ -27,7 +27,7 @@
             
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
-                <input type="text" id="nome" placeholder="Ex: Ícaro de Souza Tomé" autocomplete="name">
+                <input type="text" id="nome" placeholder="Ex: João Silva" autocomplete="name">
             </div>
 
             <div class="form-group">
@@ -36,6 +36,15 @@
                     <option value="">Selecione...</option>
                     <option value="PF">Pessoa Física (PF)</option>
                     <option value="PJ">Pessoa Jurídica (PJ)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoConta">Tipo de Conta</label>
+                <select id="tipoConta" style="width: 100%; padding: 0.8rem; border: 2px solid var(--input-border); border-radius: 10px; font-size: 1rem; color: var(--text-main); outline: none;">
+                    <option value="">Selecione...</option>
+                    <option value="CORRENTE">Conta Corrente</option>
+                    <option value="POUPANCA">Conta Poupança</option>
                 </select>
             </div>
 
@@ -49,9 +58,41 @@
                 <input type="email" id="email" placeholder="seuemail@exemplo.com">
             </div>
 
-            <div class="form-group">
-                <label for="login">Crie um Login</label>
-                <input type="text" id="login" placeholder="Como você quer acessar?">
+            <!-- edereços -->
+            <div style="border-top: 1px solid var(--input-border); padding-top: 1rem; margin-top: 1rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-main);">Endereço</h3>
+                
+                <div class="form-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" placeholder="Apenas números">
+                </div>
+
+                <div class="form-group">
+                    <label for="rua">Rua / Avenida</label>
+                    <input type="text" id="rua" placeholder="Ex: Rua das Flores">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="numero">Número</label>
+                        <input type="text" id="numero" placeholder="Ex: 123">
+                    </div>
+                    <div class="form-group" style="flex: 2;">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" id="bairro" placeholder="Seu bairro">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" id="cidade" placeholder="Sua cidade">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="estado">Estado</label>
+                        <input type="text" id="estado" placeholder="UF (Ex: SP)">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
