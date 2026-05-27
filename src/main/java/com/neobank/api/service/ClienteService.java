@@ -6,7 +6,9 @@ import com.neobank.api.exception.ClienteNaoEncontrado;
 import com.neobank.api.exception.DocumentoInvalido;
 import com.neobank.api.repository.ClienteRepository;
 import com.neobank.api.util.ValidadorDocumento;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClienteService {
     
     private ClienteRepository repository = new ClienteRepository();

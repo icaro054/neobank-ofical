@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoBank - Minha Conta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/dashboard.js" defer></script>
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+        <header class="dash-header">
+            <div>
+                <p class="boas-vindas">Olá,</p>
+                <h2 id="nomeUsuario" class="nome-usuario">Carregando...</h2>
+            </div>
+            <button onclick="sair()" class="btn-sair">Sair</button>
+        </header>
+
+        <div class="card-saldo">
+            <p>Saldo disponível</p>
+            <h1 id="saldoConta">R$ 0,00</h1>
+            <p id="infoConta" class="info-conta">Conta: -- | Agência: --</p>
+        </div>
+
+        <div class="acoes-banco">
+            <button onclick="fazerDeposito()" class="btn-acao">Depositar</button>
+            <button onclick="fazerSaque()" class="btn-acao">Sacar</button>
+            <button onclick="fazerPix()" class="btn-acao">PIX</button>
+        </div>
+
+        <div class="extrato-container">
+            <h3>Últimas Transações</h3>
+            <ul id="listaExtrato" class="lista-extrato">
+                <li>Carregando extrato...</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

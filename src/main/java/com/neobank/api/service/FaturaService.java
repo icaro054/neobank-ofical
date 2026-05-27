@@ -1,7 +1,11 @@
 package com.neobank.api.service;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.Fatura;
 import com.neobank.api.repository.FaturaRepository;
+
+@Service
 
 public class FaturaService {
 

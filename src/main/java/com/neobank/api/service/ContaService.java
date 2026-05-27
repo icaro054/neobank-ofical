@@ -3,7 +3,9 @@ package com.neobank.api.service;
 import com.neobank.api.entity.Conta;
 import com.neobank.api.exception.SaldoInsuficiente;
 import com.neobank.api.repository.ContaRepository; 
+import org.springframework.stereotype.Service;
 
+@Service
 public class ContaService {
 
     private ContaRepository repository = new ContaRepository();

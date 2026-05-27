@@ -1,7 +1,11 @@
 package com.neobank.api.service;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.Agencia;
 import com.neobank.api.repository.AgenciaRepository;
+
+@Service
 
 public class AgenciaService {
 
