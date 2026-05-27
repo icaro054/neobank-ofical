@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoBank - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/login.js" defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="brand">
+            <h1>Neo<span>Bank</span></h1>
+            <p>A nova era do seu ecossistema financeiro</p>
+        </div>
+
+        <div id="errorBanner" class="error-message"></div>
+
+        <form id="loginForm" onsubmit="efetuarLogin(event)">
+            <div class="form-group">
+                <label for="login">Usuário / Login</label>
+                <input type="text" id="login" placeholder="Digite seu login único" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha de Acesso</label>
+                <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn-login">Acessar Conta</button>
+        </form>
+
+        <div class="footer-links">
+            <p>Ainda não tem conta? <a href="cadastro.html">Abra sua conta agora</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,10 +1,14 @@
 package com.neobank.api.service;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.Usuario;
 import com.neobank.api.exception.CredenciaisInvalidas;
 import com.neobank.api.exception.FormatoInvalido;
 import com.neobank.api.exception.LoginEmUso;
 import com.neobank.api.repository.UsuarioRepository;
+
+@Service
 
 public class UsuarioService {
     

@@ -2,8 +2,12 @@ package com.neobank.api.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.Transacao;
 import com.neobank.api.repository.TransacaoRepository;
+
+@Service
 
 public class TransacaoService {
 

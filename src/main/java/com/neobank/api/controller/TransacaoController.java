@@ -3,28 +3,40 @@ package com.neobank.api.controller;
 import com.neobank.api.entity.Conta;
 import com.neobank.api.entity.Transacao;
 import com.neobank.api.service.TransacaoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-// Lembra de importar a data/hora se for usar automaticamente!
-import java.time.LocalDateTime; 
+
+@RestController
+@RequestMapping("/api/transacoes")
+@CrossOrigin(origins = "*")
+@Service
 
 public class TransacaoController {
-    private TransacaoService service = new TransacaoService();
 
+    @Autowired
+    private TransacaoService service;
+
+    // Rota que devolve a lista de transações pro HTML montar o extrato
+    @GetMapping("/extrato/{numeroConta}")
+    public List<Transacao> exibirExtrato(@PathVariable String numeroConta) {
+        return service.buscarPorConta(numeroConta);
+    }
+    
     public void registrar(Conta conta, double valor, String tipo) {
         Transacao novaTransacao = new Transacao();
         novaTransacao.setConta(conta);
         novaTransacao.setValor(valor);
         novaTransacao.setTipo(tipo);
-        // O próprio sistema preenche a hora exata da transação
-        novaTransacao.setDataHora(LocalDateTime.now().toString()); 
+        
+        // Gerando a data da transação no padrão brasileiro 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        novaTransacao.setDataHora(LocalDateTime.now().format(formatter)); 
 
         service.criarTransacao(novaTransacao);
-    }
-
-    
-     
-    public List<Transacao> exibirExtrato(String numeroConta) {
-        return service.buscarPorConta(numeroConta);
     }
 }

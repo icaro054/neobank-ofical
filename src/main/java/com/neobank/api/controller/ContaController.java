@@ -1,42 +1,50 @@
 package com.neobank.api.controller;
 
-import com.neobank.api.entity.Agencia;
-import com.neobank.api.entity.Cliente;
 import com.neobank.api.entity.Conta;
-import com.neobank.api.entity.TipoConta;
 import com.neobank.api.service.ContaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/api/contas")
+@CrossOrigin(origins = "*")
+@Service
 public class ContaController {
-    private ContaService service = new ContaService();
 
-    // A tela passa os dados, o Controller monta a Conta
-    public Conta criarConta(String numeroConta, Cliente cliente, Agencia agencia, TipoConta tipo) {
-        Conta novaConta = new Conta();
-        novaConta.setNumero(numeroConta);
-        novaConta.setCliente(cliente);
-        novaConta.setAgencia(agencia);
-        novaConta.setTipo(tipo);
-        novaConta.setSaldo(0.0); // Toda conta nasce zerada
+    @Autowired
+    private ContaService service;
 
+    @PostMapping("/criar")
+    public Conta criarConta(@RequestBody Conta novaConta) {
         service.criarConta(novaConta);
         return novaConta;
     }
 
-     
+    // Rota que o Dashboard usa pra carregar o saldo assim que o usuário entra
+    @GetMapping("/documento/{documento}")
+    public ResponseEntity<?> buscarContaPorDocumentoDoCliente(@PathVariable String documento) {
+        try {
+            Conta conta = service.buscarContaPorDocumentoDoCliente(documento);
+            return ResponseEntity.ok(conta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{numeroConta}")
+    public Conta buscarConta(@PathVariable String numeroConta) {
+        return service.buscarContaPorNumero(numeroConta);
+    }
+
+    // Mantive os métodos base que vamos plugar nos botões depois
     public void depositar(Conta conta, double valor) {
         service.depositar(conta, valor);
     }
 
     public void sacar(Conta conta, double valor) {
         service.sacar(conta, valor);
-    }
-
-    public Conta buscarConta(String numeroConta) {
-        return service.buscarContaPorNumero(numeroConta);
-    }
-    
-    public Conta buscarContaPorDocumentoDoCliente(String documento) {
-        return service.buscarContaPorDocumentoDoCliente(documento);
     }
 
     public void transferir(Conta origem, Conta destino, double valor) {

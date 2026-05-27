@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoBank - Cadastro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/cadastro.js" defer></script>
+    <style>
+        /* Ajuste simples pro formulário maior não cortar na tela e dar pra rolar */
+        body { overflow: auto; padding: 2rem 0; height: auto; min-height: 100vh; }
+        .register-container { max-width: 450px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container register-container">
+        <div class="brand">
+            <h1>Neo<span>Bank</span></h1>
+            <p>Abra sua conta em poucos passos</p>
+        </div>
+
+        <div id="errorBanner" class="error-message"></div>
+        <div id="successBanner" class="error-message" style="background-color: #dcfce7; border-color: #22c55e; color: #15803d;"></div>
+
+        <form id="cadastroForm" onsubmit="efetuarCadastro(event)">
+            
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" placeholder="Ex: Ícaro de Souza Tomé" autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label for="tipoCliente">Tipo de Cliente (PF ou PJ)</label>
+                <select id="tipoCliente" style="width: 100%; padding: 0.8rem; border: 2px solid var(--input-border); border-radius: 10px; font-size: 1rem; color: var(--text-main); outline: none;">
+                    <option value="">Selecione...</option>
+                    <option value="PF">Pessoa Física (PF)</option>
+                    <option value="PJ">Pessoa Jurídica (PJ)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="documento">Documento (CPF/CNPJ)</label>
+                <input type="text" id="documento" placeholder="Apenas números">
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seuemail@exemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="login">Crie um Login</label>
+                <input type="text" id="login" placeholder="Como você quer acessar?">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Crie uma Senha Forte</label>
+                <input type="password" id="senha" placeholder="Mínimo 8 caracteres">
+            </div>
+
+            <button type="submit" class="btn-login">Finalizar Cadastro</button>
+        </form>
+
+        <div class="footer-links">
+            <p>Já é cliente? <a href="index.html">Acesse sua conta</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

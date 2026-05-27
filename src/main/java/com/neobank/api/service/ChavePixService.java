@@ -1,8 +1,12 @@
 package com.neobank.api.service;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.ChavePix;
 import com.neobank.api.exception.FormatoInvalido;
 import com.neobank.api.repository.ChavePixRepository;
+
+@Service
 
 public class ChavePixService {
 

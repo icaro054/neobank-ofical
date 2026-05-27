@@ -1,7 +1,11 @@
 package com.neobank.api.service;
 
+import org.springframework.stereotype.Service;
+
 import com.neobank.api.entity.Parcela;
 import com.neobank.api.repository.ParcelaRepository;
+
+@Service
 
 public class ParcelaService {
 
