@@ -11,19 +11,28 @@
 
     <div class="dashboard-container">
         <header class="dash-header">
+ 
             <div class="dash-header-top">
                 <p>Olá, <strong id="nomeUsuario" class="nome-usuario">Carregando...</strong></p>
                 <button onclick="abrirPerfil()" class="btn-perfil">Meu Perfil</button>
+
+            <div>
+                <p class="dash-chip">Conta Digital</p>
+                <p class="boas-vindas">Olá,</p>
+                <h2 id="nomeUsuario" class="nome-usuario">Carregando...</h2>
+
             </div>
             <button onclick="sair()" class="btn-sair">Sair</button>
         </header>
 
-        <div class="card-saldo">
-            <p>Saldo disponível</p>
-            <h1 id="saldoConta">R$ 0,00</h1>
-            <p id="infoConta" class="info-conta">Conta: -- | Agência: --</p>
-        </div>
+        <div class="dashboard-grid">
+            <div class="card-saldo">
+                <p>Saldo disponível</p>
+                <h1 id="saldoConta">R$ 0,00</h1>
+                <p id="infoConta" class="info-conta">Conta: -- | Agência: --</p>
+            </div>
 
+ 
         <!-- Área de Cartão Fictícia -->
         <div class="card-saldo card-cartao">
             <div class="cartao-header">
@@ -45,6 +54,13 @@
             <button onclick="fazerDeposito()" class="btn-acao">Depositar</button>
             <button onclick="fazerSaque()" class="btn-acao">Sacar</button>
             <button onclick="fazerPix()" class="btn-acao">PIX</button>
+
+            <div class="acoes-banco">
+                <button onclick="fazerDeposito()" class="btn-acao">Depositar</button>
+                <button onclick="fazerSaque()" class="btn-acao">Sacar</button>
+                <button onclick="fazerPix()" class="btn-acao">PIX</button>
+            </div>
+ 
         </div>
 
         <div class="extrato-container">

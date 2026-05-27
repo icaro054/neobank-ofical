@@ -6,11 +6,6 @@
     <title>NeoBank - Cadastro</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/cadastro.js" defer></script>
-    <style>
-        /* Ajuste simples pro formulário maior não cortar na tela e dar pra rolar */
-        body { overflow: auto; padding: 2rem 0; height: auto; min-height: 100vh; }
-        .register-container { max-width: 450px; }
-    </style>
 </head>
 <body>
 
@@ -32,7 +27,7 @@
 
             <div class="form-group">
                 <label for="tipoCliente">Tipo de Cliente (PF ou PJ)</label>
-                <select id="tipoCliente" style="width: 100%; padding: 0.8rem; border: 2px solid var(--input-border); border-radius: 10px; font-size: 1rem; color: var(--text-main); outline: none;">
+                <select id="tipoCliente">
                     <option value="">Selecione...</option>
                     <option value="PF">Pessoa Física (PF)</option>
                     <option value="PJ">Pessoa Jurídica (PJ)</option>
@@ -97,7 +92,15 @@
 
             <div class="form-group">
                 <label for="senha">Crie uma Senha Forte</label>
-                <input type="password" id="senha" placeholder="Mínimo 8 caracteres">
+                <div class="password-wrapper">
+                    <input type="password" id="senha" placeholder="Mínimo 8 caracteres">
+                    <button type="button" class="toggle-password" aria-label="Mostrar senha">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="btn-login">Finalizar Cadastro</button>

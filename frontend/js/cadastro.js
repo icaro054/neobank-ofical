@@ -69,3 +69,24 @@ function efetuarCadastro(event) {
         botaoSubmit.disabled = false;
     });
 }
+
+// Configura os botões de mostrar/ocultar senha na página de cadastro
+function setupPasswordToggles() {
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('input');
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.setAttribute('aria-label', 'Ocultar senha');
+                btn.classList.add('visible');
+            } else {
+                input.type = 'password';
+                btn.setAttribute('aria-label', 'Mostrar senha');
+                btn.classList.remove('visible');
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupPasswordToggles);
