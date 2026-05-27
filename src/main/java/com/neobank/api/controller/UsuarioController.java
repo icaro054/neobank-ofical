@@ -20,8 +20,10 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<?> fazerLogin(@RequestBody Usuario dadosLogin) {
         try {
+            // Limpa a pontuação do CPF (caso o cliente tenha digitado com pontos e traços)
+            String loginLimpo = dadosLogin.getLogin() != null ? dadosLogin.getLogin().replaceAll("[^0-9]", "") : "";
             // Tenta logar usando a lógica blindada do Service
-            Usuario usuarioLogado = service.fazerLogin(dadosLogin.getLogin(), dadosLogin.getSenha());
+            Usuario usuarioLogado = service.fazerLogin(loginLimpo, dadosLogin.getSenha());
             return ResponseEntity.ok(usuarioLogado);
         } catch (Exception e) {
             // Errou a senha ou login não existe

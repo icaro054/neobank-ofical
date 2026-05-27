@@ -22,10 +22,16 @@ function efetuarCadastro(event) {
     const novoCliente = {
         nome: document.getElementById('nome').value.trim(),
         tipoCliente: document.getElementById('tipoCliente').value,
+        tipoConta: document.getElementById('tipoConta').value,
         documento: document.getElementById('documento').value.trim(),
         email: document.getElementById('email').value.trim(),
-        login: document.getElementById('login').value.trim(),
-        senha: document.getElementById('senha').value
+        senha: document.getElementById('senha').value,
+        cep: document.getElementById('cep').value.trim(),
+        rua: document.getElementById('rua').value.trim(),
+        numero: document.getElementById('numero').value.trim(),
+        bairro: document.getElementById('bairro').value.trim(),
+        cidade: document.getElementById('cidade').value.trim(),
+        estado: document.getElementById('estado').value.trim()
     };
 
     // envia os dados pro nosso endpoint lá no java
@@ -37,13 +43,14 @@ function efetuarCadastro(event) {
     .then(async response => {
         // se o java aceitar o cadastro e der tudo certo
         if (response.ok) {
-            successBanner.innerText = 'Conta criada com sucesso! Redirecionando para o login...';
+            const contaCriada = await response.json();
+            successBanner.innerText = `Conta criada com sucesso! Agência: ${contaCriada.agencia.numero} - Conta: ${contaCriada.numero}. Redirecionando para o login...`;
             successBanner.style.display = 'block';
             
-            // espera 2 segundos e joga o usuário pra tela de login automaticamente
+            // espera 4 segundos e joga o usuário pra tela de login automaticamente
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 2000);
+            }, 4000);
         } 
         // se o java barrar por causa de alguma regra do service (tipo senha curta ou cpf repetido)
         else {

@@ -35,6 +35,12 @@ public class ContaService {
         repository.salvar(novaConta);
     }
 
+    public void excluirConta(Conta conta) {
+        if (conta != null) {
+            repository.deletar(conta);
+        }
+    }
+
     public void depositar(Conta conta, double valor) {
         if (valor <= 0) {
             throw new IllegalArgumentException("Erro: O valor do depósito deve ser maior que zero.");

@@ -23,7 +23,7 @@ public class TransacaoController {
 
     // Rota que devolve a lista de transações pro HTML montar o extrato
     @GetMapping("/extrato/{numeroConta}")
-    public List<Transacao> exibirExtrato(@PathVariable String numeroConta) {
+    public List<Transacao> exibirExtrato(@PathVariable("numeroConta") String numeroConta) {
         return service.buscarPorConta(numeroConta);
     }
     
